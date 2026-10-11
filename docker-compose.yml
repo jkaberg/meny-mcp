@@ -1,0 +1,27 @@
+services:
+  meny-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - MENY_HTTP_ALLOWED_HOSTS=meny-mcp.${DOMAIN},meny-mcp.${DOMAIN}:443
+      - MENY_HTTP_ALLOWED_ORIGINS=https://meny-mcp.${DOMAIN}
+      # Bare names are passed through only when set, so an unset variable
+      # leaves the image default alone instead of overriding it with "".
+      - MENY_STORE_ID
+      # Optional. Setting both enables the weekly-menu toolset, which WRITES
+      # to that Mealie instance. Over HTTP it stays hidden until
+      # MENY_AUTH_TOKEN is set too - see docs/hosting.md.
+      - MEALIE_URL
+      - MEALIE_TOKEN
+      - MENY_AUTH_TOKEN
+    volumes:
+      # The week manifest and the resolved Mealie id maps. Without this a
+      # redeploy loses a run half way through.
+      - meny-state:/data
+    ports:
+      - "127.0.0.1:8000:8000"
+
+volumes:
+  meny-state:
