@@ -1,0 +1,32 @@
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# secrets and local state
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+data/
+
+# editors and os
+.idea/
+.vscode/
+.DS_Store
+
+# local assistant config
+.claude/
+CLAUDE.md
